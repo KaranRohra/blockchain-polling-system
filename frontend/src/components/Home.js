@@ -11,7 +11,6 @@ function Home() {
     useEffect(() => {
         getAllPollsAPI()
             .then((response) => {
-                console.log(response.data);
                 setPolls(response.data);
             })
             .catch((e) => {
@@ -25,7 +24,7 @@ function Home() {
             <Grid m={3} container spacing={2}>
                 {polls.map((poll, key) => (
                     <Grid item key={key} xs={4}>
-                        <HomeContent poll={poll.block.poll_details} />
+                        <HomeContent poll={poll.block.poll_details} pollId={poll.block.index} />
                     </Grid>
                 ))}
             </Grid>

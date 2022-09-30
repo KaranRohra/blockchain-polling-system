@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { Cookies } from "react-cookie";
 
 const Header = () => {
-    const pages = ["Home", "Create Poll"];
+    const pages = [{title: "Home", url: "/"}, {title: "Create Poll", url: "/polls/create"}];
     const {logout} = useUserAuth();
     const navigate = useNavigate();
     const cookies = new Cookies();
@@ -29,17 +29,18 @@ const Header = () => {
                             display: { xs: "none", md: "flex" },
                         }}
                     >
-                        {pages.map((page) => (
+                        {pages.map((page, key) => (
                             <Button
-                                key={page}
+                                key={key}
                                 sx={{
                                     ml: 2,
                                     color: "white",
                                     display: "block",
                                     border: "1px solid black",
                                 }}
+                                onClick={() => navigate(page.url)}
                             >
-                                {page}
+                                {page.title}
                             </Button>
                         ))}
                     </Box>

@@ -32,7 +32,7 @@ function Auth() {
         setLoading(true);
         login(email, password)
             .then((response) => {
-                cookies.set("token", true);
+                cookies.set("token", email);
                 navigate("/");
             })
             .catch((e) => {
@@ -45,7 +45,7 @@ function Auth() {
         setLoading(true);
         googleLogin()
             .then((response) => {
-                cookies.set("token", true);
+                cookies.set("token", email);
                 navigate("/");
             })
             .catch((e) => {

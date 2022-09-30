@@ -1,7 +1,9 @@
 import React from "react";
 import { Card, CardContent, Typography, Button, CardActions } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 
-function HomeContent({poll}) {
+function HomeContent({poll, pollId}) {
+    const navigate = useNavigate();
     return (
         <Card sx={{width: "80%"}}>
             <CardContent>
@@ -14,7 +16,7 @@ function HomeContent({poll}) {
                 </Typography>
             </CardContent>
             <CardActions>
-                <Button size="small">Poll</Button>
+                <Button size="small" onClick={()=>navigate("/polls/"+ pollId)}>Poll</Button>
             </CardActions>
         </Card>
     );

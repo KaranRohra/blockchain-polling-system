@@ -4,6 +4,8 @@ import Auth from "components/Auth";
 import Home from "components/Home";
 import { UserAuthContextProvider } from "context/UserAuthContext";
 import ProtectedRoute from "routes/ProtectedRoute";
+import PollDetails from "components/PollDetails";
+import Header from "components/Header";
 
 function App() {
     return (
@@ -18,6 +20,23 @@ function App() {
                             element={
                                 <ProtectedRoute>
                                     <Home />
+                                </ProtectedRoute>
+                            }
+                        />
+                        <Route
+                            path="/polls/create"
+                            element={
+                                <ProtectedRoute>
+                                    <Header />
+                                </ProtectedRoute>
+                            }
+                        />
+                        <Route
+                            path="/polls/:pollId"
+                            element={
+                                <ProtectedRoute>
+                                    <Header />
+                                    <PollDetails />
                                 </ProtectedRoute>
                             }
                         />
