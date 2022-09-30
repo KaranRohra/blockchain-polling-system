@@ -12,7 +12,7 @@ import {
     Paper,
     LinearProgress,
 } from "@mui/material";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import { getPollAPI, givePollAPI } from "services/pollAPIs";
 import { Cookies } from "react-cookie";
 
@@ -131,7 +131,6 @@ function PollDetails() {
                     </Paper>
                 </div>
             )}
-            <ToastContainer />
         </Container>
     );
 }

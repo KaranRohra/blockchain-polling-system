@@ -6,6 +6,8 @@ import { UserAuthContextProvider } from "context/UserAuthContext";
 import ProtectedRoute from "routes/ProtectedRoute";
 import PollDetails from "components/PollDetails";
 import Header from "components/Header";
+import CreatePoll from "components/CreatePoll";
+import { ToastContainer } from "react-toastify";
 
 function App() {
     return (
@@ -28,6 +30,7 @@ function App() {
                             element={
                                 <ProtectedRoute>
                                     <Header />
+                                    <CreatePoll />
                                 </ProtectedRoute>
                             }
                         />
@@ -43,6 +46,7 @@ function App() {
                     </Routes>
                 </UserAuthContextProvider>
             </Router>
+            <ToastContainer />
         </div>
     );
 }

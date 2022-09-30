@@ -23,3 +23,9 @@ export const givePollAPI = (userId, pollId, pollOptionId) => {
         poll_option_id: Number(pollOptionId),
     });
 };
+
+export const createPollAPI = (poll) => {
+    return axios.post(`${baseURL}/polls/`, {
+        polls: [poll],
+    });
+};
