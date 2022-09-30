@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import GoogleButton from "react-google-button";
 import {
     Box,
     Button,
@@ -14,24 +15,38 @@ import {
 } from "@mui/material";
 import { AccountCircle, Visibility, VisibilityOff } from "@mui/icons-material";
 import { useUserAuth } from "context/UserAuthContext";
+import { useNavigate } from "react-router-dom";
+import { Cookies } from "react-cookie";
 
-function Register() {
+function Auth() {
     const [showPassword, setShowPassword] = useState(false);
     const [email, setEmail] = useState();
     const [password, setPassword] = useState();
     const [alert, setAlert] = useState({});
     const [loading, setLoading] = useState(false);
-    const { register } = useUserAuth();
+    const { login, googleLogin } = useUserAuth();
+    const navigate = useNavigate();
+    const cookies = new Cookies();
 
-    const handleSubmit = async () => {
+    const handleSubmit = () => {
         setLoading(true);
-        register(email, password)
+        login(email, password)
             .then((response) => {
-                setAlert({
-                    variant: "success",
-                    message: "Account created successfully",
-                });
+                cookies.set("token", true);
+                navigate("/");
+            })
+            .catch((e) => {
+                setAlert({ variant: "error", message: e.message });
                 setLoading(false);
+            });
+    };
+
+    const handleGoogleLogin = () => {
+        setLoading(true);
+        googleLogin()
+            .then((response) => {
+                cookies.set("token", true);
+                navigate("/");
             })
             .catch((e) => {
                 setAlert({ variant: "error", message: e.message });
@@ -55,6 +70,7 @@ function Register() {
                 >
                     Blockchain Polling System
                 </Typography>
+
                 <Paper component="form" sx={{ border: "1px solid grey" }}>
                     {alert.message && (
                         <Box>
@@ -74,9 +90,8 @@ function Register() {
                                 ),
                             }}
                             variant="standard"
-                            name="email"
-                            onChange={(e) => setEmail(e.target.value)}
                             fullWidth
+                            onChange={(e) => setEmail(e.target.value)}
                         />
                     </Box>
                     <Box sx={{ m: 2 }}>
@@ -101,9 +116,8 @@ function Register() {
                                 ),
                             }}
                             variant="standard"
-                            name="password"
-                            onChange={(e) => setPassword(e.target.value)}
                             fullWidth
+                            onChange={(e) => setPassword(e.target.value)}
                         />
                     </Box>
                     {loading ? (
@@ -111,20 +125,31 @@ function Register() {
                             <CircularProgress />
                         </Box>
                     ) : (
-                        <Box m={2} sx={{ textAlign: "center" }}>
-                            <Button
-                                variant="contained"
-                                sx={{ width: "100%" }}
-                                onClick={handleSubmit}
-                            >
-                                Register
-                            </Button>
-                        </Box>
+                        <div>
+                            <Box m={2} sx={{ textAlign: "center" }}>
+                                <Button
+                                    variant="contained"
+                                    sx={{ width: "100%" }}
+                                    onClick={handleSubmit}
+                                >
+                                    Login
+                                </Button>
+                                <h3>OR</h3>
+                            </Box>
+                            <Box m={2}>
+                                <GoogleButton
+                                    type="dark"
+                                    label="Sign in with Google"
+                                    onClick={handleGoogleLogin}
+                                    style={{ width: "100%" }}
+                                />
+                            </Box>
+                        </div>
                     )}
                     <Box m={2} sx={{ textAlign: "center" }}>
                         <Typography>
-                            Already have an account?{" "}
-                            <Link href="/auth">Login</Link>
+                            Don't have an account?{" "}
+                            <Link href="/register">Register</Link>
                         </Typography>
                     </Box>
                 </Paper>
@@ -133,4 +158,4 @@ function Register() {
     );
 }
 
-export default Register;
+export default Auth;
