@@ -93,10 +93,13 @@ class PollByUserAPI(APIView):
             user_poll[(poll_by, poll_id)] = poll_option_id
             return Response({"message": "Polled successfully"})
         return Response({"message": "Blockchain is corrupted"})
+    
+    def get(self, request, *args, **kwargs):
+        return Response(poll_by_blockchain.chain)
 
 
 
-class CorrupBlockchainAPI(APIView):
+class CorruptBlockchainAPI(APIView):
     def get(self, request, *args, **kwargs):
         block = created_poll_blockchain.chain[
             randint(0, len(created_poll_blockchain.chain) - 1)
